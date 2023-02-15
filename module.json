@@ -32,5 +32,6 @@
 	],
 	"url": "#{URL}#",
 	"manifest": "#{MANIFEST}#",
-	"download": "#{DOWNLOAD}#"
+	"download": "#{DOWNLOAD}#",
+	"changelog": "#{CHANGELOG}#"
 }
