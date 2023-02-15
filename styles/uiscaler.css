@@ -12,13 +12,12 @@
 
 :root {
 	--uiscaler-scale: 1.0;
-	--uiscaler-height-adjustment: calc(100vh / var(--uiscaler-scale));
 }
 
 #ui-left {
 	transform: scale(var(--uiscaler-scale)) !important;
 	transform-origin: top left !important;
-	height: var(--uiscaler-height-adjustment) !important;
+	height: calc(100vh / var(--uiscaler-scale)) !important;
 }
 
 #ui-top {
@@ -27,6 +26,28 @@
 }
 
 #ui-bottom {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: bottom left !important;
+}
+
+#lib-df-buttons.left {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: top left !important;
+	margin-top: calc(74px * var(--uiscaler-scale)) !important;
+	margin-left: calc(110px * var(--uiscaler-scale)) !important;
+}
+
+#lib-df-buttons.right {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: top right !important;
+}
+
+#lib-df-buttons.top {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: top left !important;
+}
+
+#lib-df-buttons.bottom {
 	transform: scale(var(--uiscaler-scale)) !important;
 	transform-origin: bottom left !important;
 }
