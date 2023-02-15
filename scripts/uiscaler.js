@@ -13,19 +13,10 @@
 Hooks.once("setup", () => {
 
 	function _updateScale(scale) {
-		const floatScale = scale / 100;
+		const floatScale = (scale ?? game.settings.get("uiscaler", "scale")) / 100;
 		const rootStyle = document.querySelector(':root').style;
 		rootStyle.setProperty("--uiscaler-scale", floatScale);
-	};
-
-	function _onRenderSettingsConfig(app, html, user) {
-		const input = html[0].querySelector('input[name="uiscaler.scale"]');
-		input.addEventListener("change", () => {
-			_updateScale(input.value);
-		});
 	}
-
-	Hooks.on("renderSettingsConfig", _onRenderSettingsConfig);
 
 	game.settings.register("uiscaler", "scale", {
 		name: game.i18n.localize("uiscaler.scale.name"),
@@ -38,11 +29,21 @@ Hooks.once("setup", () => {
 			max: 200,
 			step: 1
 		},
-		default: 100,
-		onChange: _updateScale
+		default: 100
 	});
 
-	const scale = game.settings.get("uiscaler", "scale");
-	_updateScale(scale);
+	Hooks.on("renderSettingsConfig", (app, html, user) => {
+		// Update the UI in realtime if the user drags the slider
+		const input = html[0].querySelector('input[name="uiscaler.scale"]');
+		input.addEventListener("change", () => {
+			_updateScale(input.value);
+		});
+	});
+
+	// Not required if settings are saved, but resets the UI scale if the settings are closed without saving.
+	Hooks.on("closeSettingsConfig", () => _updateScale());
+
+	// Set the scale on startup
+	_updateScale();
 
 });
