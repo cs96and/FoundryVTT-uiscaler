@@ -7,7 +7,7 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C0C057N35)
 
-UI Scaler is a Foundry VTT module that allows increase or decrease the size of the user interface elements (left side bar, navigation bar, and macro bar).
+UI Scaler is a Foundry VTT module that allows you to increase or decrease the size of the user interface elements (left side bar, navigation bar, and macro bar).
 
 ## Installation
 UI Scaler can be installed using the Foundry module installer.  Alternatively, you can install it using the following manifest URL...<br>
