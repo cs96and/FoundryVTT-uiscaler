@@ -1,0 +1,32 @@
+/*
+ * UI Scaler
+ * https://github.com/cs96and/FoundryVTT-uiscaler
+ *
+ * Copyright (c) 2023 Alan Davies - All Rights Reserved.
+ *
+ * You may use, distribute and modify this code under the terms of the MIT license.
+ *
+ * You should have received a copy of the MIT license with this file. If not, please visit:
+ * https://mit-license.org/
+ */
+
+:root {
+	--uiscaler-scale: 1.0;
+	--uiscaler-height-adjustment: calc(100vh / var(--uiscaler-scale));
+}
+
+#ui-left {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: top left !important;
+	height: var(--uiscaler-height-adjustment) !important;
+}
+
+#ui-top {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: top left !important;
+}
+
+#ui-bottom {
+	transform: scale(var(--uiscaler-scale)) !important;
+	transform-origin: bottom left !important;
+}

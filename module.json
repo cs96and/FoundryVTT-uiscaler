@@ -1,0 +1,36 @@
+{
+	"id": "uiscaler",
+	"type": "module",
+	"title": "UI Scaler",
+	"description": "Scales UI elements to make them bigger or smaller.",
+	"version": "#{VERSION}#",
+	"library": false,
+	"compatibility": {
+		"minimum": "10",
+		"verified": "10"
+	},
+	"authors": [
+		{
+			"name": "Alan Davies",
+			"discord": "cs96and#3764",
+			"ko-fi": "cs96and"
+		}
+	],
+	"esmodules": [
+		"scripts/uiscaler.js"
+	],
+	"scripts": [],
+	"styles": [
+		"styles/uiscaler.css"
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"url": "#{URL}#",
+	"manifest": "#{MANIFEST}#",
+	"download": "#{DOWNLOAD}#"
+}
