@@ -12,15 +12,40 @@
 
 Hooks.once("setup", () => {
 
-	function _updateScale(scale) {
-		const floatScale = (scale ?? game.settings.get("uiscaler", "scale")) / 100;
-		const rootStyle = document.querySelector(':root').style;
-		rootStyle.setProperty("--uiscaler-scale", floatScale);
+	const rootStyle = document.querySelector(':root').style;
+
+	function _updateUiScale(scale) {
+		const floatScale = (scale ?? game.settings.get("uiscaler", "ui-scale")) / 100;
+		rootStyle.setProperty("--uiscaler-ui-scale", floatScale);
 	}
 
-	game.settings.register("uiscaler", "scale", {
-		name: game.i18n.localize("uiscaler.scale.name"),
-		hint: game.i18n.localize("uiscaler.scale.hint"),
+	function _updateWindowScale(scale) {
+		const floatScale = (scale ?? game.settings.get("uiscaler", "window-scale")) / 100;
+		rootStyle.setProperty("--uiscaler-window-scale", floatScale);
+	}
+
+	function _updateScales() {
+		_updateUiScale();
+		_updateWindowScale();
+	}
+
+	game.settings.register("uiscaler", "ui-scale", {
+		name: game.i18n.localize("uiscaler.ui-scale.name"),
+		hint: game.i18n.localize("uiscaler.ui-scale.hint"),
+		scope: 'client',
+		config: true,
+		type: Number,
+		range: {
+			min: 10,
+			max: 200,
+			step: 1
+		},
+		default: 100
+	});
+
+	game.settings.register("uiscaler", "window-scale", {
+		name: game.i18n.localize("uiscaler.window-scale.name"),
+		hint: game.i18n.localize("uiscaler.window-scale.hint"),
 		scope: 'client',
 		config: true,
 		type: Number,
@@ -34,16 +59,21 @@ Hooks.once("setup", () => {
 
 	Hooks.on("renderSettingsConfig", (app, html, user) => {
 		// Update the UI in realtime if the user drags the slider
-		const input = html[0].querySelector('input[name="uiscaler.scale"]');
-		input.addEventListener("change", () => {
-			_updateScale(input.value);
+		const uiInput = html[0].querySelector('input[name="uiscaler.ui-scale"]');
+		uiInput.addEventListener("change", (...args) => {
+			_updateUiScale(uiInput.value);
+		});
+
+		const windowInput = html[0].querySelector('input[name="uiscaler.window-scale"]');
+		windowInput.addEventListener("change", (...args) => {
+			_updateWindowScale(windowInput.value);
 		});
 	});
 
 	// Not required if settings are saved, but resets the UI scale if the settings are closed without saving.
-	Hooks.on("closeSettingsConfig", () => _updateScale());
+	Hooks.on("closeSettingsConfig", () => _updateScales());
 
-	// Set the scale on startup
-	_updateScale();
+	// Set the scales on startup
+	_updateScales();
 
 });
