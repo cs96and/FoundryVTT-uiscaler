@@ -65,6 +65,10 @@
 	transform-origin: bottom left !important;
 }
 
+#interface {
+	overflow: visible;
+}
+
 .app.window-app {
 	transform: scale(var(--uiscaler-window-scale)) !important;
 	transform-origin: top left !important;
