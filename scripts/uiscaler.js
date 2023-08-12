@@ -74,6 +74,5 @@ Hooks.once("setup", () => {
 	Hooks.on("closeSettingsConfig", () => _updateScales());
 
 	// Set the scales on startup
-	_updateScales();
-
+	Hooks.once("ready", () => _updateScales());
 });
