@@ -20,8 +20,16 @@ Hooks.once("setup", () => {
 	}
 
 	function _updateWindowScale(scale) {
-		const floatScale = (scale ?? game.settings.get("uiscaler", "window-scale")) / 100;
-		rootStyle.setProperty("--uiscaler-window-scale", floatScale);
+		let renderOptions = {}
+		if (scale)
+			renderOptions.scale = scale / 100;
+
+		// Loop through all open windows (apart from the settings window) and re-render them with the updated scale
+		for (const window of Object.values(ui.windows)) {
+			if (!(window instanceof SettingsConfig)) {
+				window.render(false, renderOptions);
+			}
+		}
 	}
 
 	function _updateScales() {
@@ -73,7 +81,19 @@ Hooks.once("setup", () => {
 	// Not required if settings are saved, but resets the UI scale if the settings are closed without saving.
 	Hooks.on("closeSettingsConfig", () => _updateScales());
 
+	// Override window rendering to apply the chosen window scale
+	function applicationRender(wrapped, force = false, options = {}) {
+		options.scale ??= game.settings.get("uiscaler", "window-scale") / 100;
+		return wrapped(force, options);
+	}
+
+	libWrapper.register('uiscaler', 'Application.prototype.render', applicationRender, "WRAPPER");
+
 	// Set the scales on startup
 	_updateScales();
+});
 
+Hooks.once("ready", async () => {
+	if (!game.modules.get('lib-wrapper')?.active && game.user.isGM)
+		ui.notifications.error("UI Scaler requires the 'libWrapper' module. Please install and activate it.", { permanent: true });
 });

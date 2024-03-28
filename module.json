@@ -16,6 +16,14 @@
 			"ko-fi": "cs96and"
 		}
 	],
+	"relationships": {
+		"requires": [
+			{
+				"id": "lib-wrapper",
+				"type": "module"
+			}
+		]
+	},
 	"esmodules": [
 		"scripts/uiscaler.js"
 	],

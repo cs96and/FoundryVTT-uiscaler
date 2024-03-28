@@ -68,9 +68,3 @@
 #interface {
 	overflow: visible;
 }
-
-.app.window-app {
-	transform: scale(var(--uiscaler-window-scale)) !important;
-	transform-origin: top left !important;
-	max-height: calc(100% / var(--uiscaler-window-scale)) !important;
-}
