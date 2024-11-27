@@ -1,0 +1,6 @@
+{
+	"uiscaler.ui-scale.name": "Ridimensiona Intefaccia Utente",
+	"uiscaler.ui-scale.hint": "Valore per ridimensionare i componenti dell'interfaccia utente.  Meno del 100% rimpicciolirà i componenti, mentre più del 100% li farà ingrandire.",
+	"uiscaler.window-scale.name": "Ridimensiona Finestra",
+	"uiscaler.window-scale.hint": "Valore per ridimensionare le finestre."
+}
