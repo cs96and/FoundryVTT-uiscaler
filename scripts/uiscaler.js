@@ -20,14 +20,21 @@ Hooks.once("setup", () => {
 	}
 
 	function _updateWindowScale(scale) {
-		let renderOptions = {}
-		if (scale)
-			renderOptions.scale = scale / 100;
+		const options = {
+			scale: (scale ?? game.settings.get("uiscaler", "window-scale")) / 100
+		};
+
+		// Loop through all the v2 windows and update their scale
+		if (game.release.generation >= 12) {
+			for (const app of foundry.applications.instances.values()) {
+				app.setPosition(options);
+			}
+		}
 
 		// Loop through all open windows (apart from the settings window) and re-render them with the updated scale
 		for (const window of Object.values(ui.windows)) {
 			if (!(window instanceof SettingsConfig)) {
-				window.render(false, renderOptions);
+				window.render(false, options);
 			}
 		}
 	}
@@ -82,13 +89,21 @@ Hooks.once("setup", () => {
 	Hooks.on("closeSettingsConfig", () => _updateScales());
 
 	// Override window rendering to apply the chosen window scale
-	function applicationRender(wrapped, force = false, options = {}) {
+	async function applicationRender(wrapped, force = false, options = {}) {
 		options.scale ??= game.settings.get("uiscaler", "window-scale") / 100;
 		return wrapped(force, options);
 	}
 
 	libWrapper.register('uiscaler', 'Application.prototype.render', applicationRender, "WRAPPER");
 
+	// Override ApplicationV2 rendering to apply the chosen window scale
+	Hooks.on("renderApplicationV2", (app, html) => {
+		const options = {
+			scale: game.settings.get("uiscaler", "window-scale") / 100
+		};
+		app.setPosition(options);
+	});
+	
 	// Set the scales on startup
 	_updateScales();
 });
