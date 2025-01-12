@@ -89,12 +89,10 @@ Hooks.once("setup", () => {
 	Hooks.on("closeSettingsConfig", () => _updateScales());
 
 	// Override window rendering to apply the chosen window scale
-	async function applicationRender(wrapped, force = false, options = {}) {
+	libWrapper.register('uiscaler', 'Application.prototype.render', (wrapped, force = false, options = {}) => {
 		options.scale ??= game.settings.get("uiscaler", "window-scale") / 100;
 		return wrapped(force, options);
-	}
-
-	libWrapper.register('uiscaler', 'Application.prototype.render', applicationRender, "WRAPPER");
+	}, "WRAPPER");
 
 	// Override ApplicationV2 rendering to apply the chosen window scale
 	Hooks.on("renderApplicationV2", (app, html) => {
