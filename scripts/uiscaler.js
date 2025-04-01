@@ -2,7 +2,7 @@
  * UI Scaler
  * https://github.com/cs96and/FoundryVTT-uiscaler
  *
- * Copyright (c) 2023-2024 Alan Davies - All Rights Reserved.
+ * Copyright (c) 2023-2025 Alan Davies - All Rights Reserved.
  *
  * You may use, distribute and modify this code under the terms of the MIT license.
  *
