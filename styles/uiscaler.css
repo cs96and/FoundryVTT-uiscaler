@@ -10,33 +10,33 @@
  * https://mit-license.org/
  */
 
-:root {
+:root.uiscaler-v12 {
 	--uiscaler-ui-scale: 1.0;
 	--uiscaler-window-scale: 1.0;
 	--uiscaler-transform-adjust: calc(var(--uiscaler-ui-scale) - 1.0);
 }
 
-#ui-left {
+.uiscaler-v12 #ui-left {
 	transform: scale(var(--uiscaler-ui-scale)) !important;
 	transform-origin: top left !important;
 	height: calc(100vh / var(--uiscaler-ui-scale)) !important;
 }
 
-#ui-top {
+.uiscaler-v12 #ui-top {
 	/* 130px is the width of #ui-left (220px), minus the 90px negative margin on #ui-top */
 	transform:	translateX(calc(130px * var(--uiscaler-transform-adjust)))
 				scale(var(--uiscaler-ui-scale)) !important;
 	transform-origin: top left !important;
 }
 
-#ui-bottom {
+.uiscaler-v12 #ui-bottom {
 	/* 220px is the width of ui-left */
 	transform:	translateX(calc(220px * var(--uiscaler-transform-adjust)))
 				scale(var(--uiscaler-ui-scale)) !important;
 	transform-origin: bottom left !important;
 }
 
-#lib-df-buttons.left {
+.uiscaler-v12 #lib-df-buttons.left {
 	/* 106px and 74px are the argin offsets of #lib-df-buttons.left */
 	transform:	translateX(calc(106px * var(--uiscaler-transform-adjust)))
 				translateY(calc(74px * var(--uiscaler-transform-adjust)))
@@ -44,12 +44,12 @@
 	transform-origin: top left !important;
 }
 
-#lib-df-buttons.right {
+.uiscaler-v12 #lib-df-buttons.right {
 	transform: scale(var(--uiscaler-ui-scale)) !important;
 	transform-origin: top right !important;
 }
 
-#lib-df-buttons.top {
+.uiscaler-v12 #lib-df-buttons.top {
 	/* 106px and 74px are the argin offsets of #lib-df-buttons.top */
 	transform:	translateX(calc(106px * var(--uiscaler-transform-adjust)))
 				translateY(calc(54px * var(--uiscaler-transform-adjust)))
@@ -57,7 +57,7 @@
 	transform-origin: top left !important;
 }
 
-#lib-df-buttons.bottom {
+.uiscaler-v12 #lib-df-buttons.bottom {
 	/* 220px is the width of ui-left.  62px is the height of ui-bottom */
 	transform:	translateX(calc(220px * var(--uiscaler-transform-adjust)))
 				translateY(calc(-62px * var(--uiscaler-transform-adjust)))

@@ -1,13 +1,12 @@
 {
 	"id": "uiscaler",
-	"type": "module",
 	"title": "UI Scaler",
 	"description": "Scales UI elements to make them bigger or smaller.",
 	"version": "#{VERSION}#",
 	"library": false,
 	"compatibility": {
 		"minimum": "10",
-		"verified": "12"
+		"verified": "13"
 	},
 	"authors": [
 		{

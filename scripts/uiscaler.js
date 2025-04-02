@@ -12,11 +12,17 @@
 
 Hooks.once("setup", () => {
 
-	const rootStyle = document.querySelector(':root').style;
+	const root = document.querySelector(':root');
+
+	if (game.release.generation < 13) {
+		root.classList.add("uiscaler-v12");
+	}
 
 	function _updateUiScale(scale) {
-		const floatScale = (scale ?? game.settings.get("uiscaler", "ui-scale")) / 100;
-		rootStyle.setProperty("--uiscaler-ui-scale", floatScale);
+		if (game.release.generation < 13) {
+			const floatScale = (scale ?? game.settings.get("uiscaler", "ui-scale")) / 100;
+			root.style.setProperty("--uiscaler-ui-scale", floatScale);
+		}
 	}
 
 	function _updateWindowScale(scale) {
@@ -24,10 +30,12 @@ Hooks.once("setup", () => {
 			scale: (scale ?? game.settings.get("uiscaler", "window-scale")) / 100
 		};
 
-		// Loop through all the v2 windows and update their scale
+		// Loop through all the v2 windows (apart from the settings window) and update their scale
 		if (game.release.generation >= 12) {
-			for (const app of foundry.applications.instances.values()) {
-				app.setPosition(options);
+			for (const [_, app] of foundry.applications.instances) {
+				if (app.hasFrame && !(app instanceof SettingsConfig)) {
+					app.setPosition(options);
+				}
 			}
 		}
 
@@ -44,19 +52,21 @@ Hooks.once("setup", () => {
 		_updateWindowScale();
 	}
 
-	game.settings.register("uiscaler", "ui-scale", {
-		name: game.i18n.localize("uiscaler.ui-scale.name"),
-		hint: game.i18n.localize("uiscaler.ui-scale.hint"),
-		scope: 'client',
-		config: true,
-		type: Number,
-		range: {
-			min: 10,
-			max: 200,
-			step: 1
-		},
-		default: 100
-	});
+	if (game.release.generation < 13) {
+		game.settings.register("uiscaler", "ui-scale", {
+			name: game.i18n.localize("uiscaler.ui-scale.name"),
+			hint: game.i18n.localize("uiscaler.ui-scale.hint"),
+			scope: 'client',
+			config: true,
+			type: Number,
+			range: {
+				min: 10,
+				max: 200,
+				step: 1
+			},
+			default: 100
+		});
+	}
 
 	game.settings.register("uiscaler", "window-scale", {
 		name: game.i18n.localize("uiscaler.window-scale.name"),
@@ -73,13 +83,18 @@ Hooks.once("setup", () => {
 	});
 
 	Hooks.on("renderSettingsConfig", (app, html, user) => {
-		// Update the UI in realtime if the user drags the slider
-		const uiInput = html[0].querySelector('input[name="uiscaler.ui-scale"]');
-		uiInput.addEventListener("change", (...args) => {
-			_updateUiScale(uiInput.value);
-		});
+		// Update the UI in realtime if the user drags either slider
+		const element = game.release.generation >= 13 ? html : html[0];
+		const rangePicker = game.release.generation >= 13 ? 'range-picker' : 'input';
 
-		const windowInput = html[0].querySelector('input[name="uiscaler.window-scale"]');
+		if (game.release.generation < 13) {
+			const uiInput = element.querySelector(`${rangePicker}[name="uiscaler.ui-scale"]`);
+			uiInput.addEventListener("change", (...args) => {
+				_updateUiScale(uiInput.value);
+			});
+		}
+
+		const windowInput = element.querySelector(`${rangePicker}[name="uiscaler.window-scale"]`);
 		windowInput.addEventListener("change", (...args) => {
 			_updateWindowScale(windowInput.value);
 		});
